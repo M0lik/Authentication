@@ -2,7 +2,7 @@ import db from "../models";
 const ROLES = db.ROLES;
 const User = db.user;
 
-const checkDuplicateUsernameOrEmail = (req, res, next) => {
+const checkDuplicateUsernameOrEmail = async (req, res, next) => {
   try {
     if (await User.findOne({ username: req.body.username }).exec())
       return res.status(400).send({ message: "Failed! Username is already in use!" });

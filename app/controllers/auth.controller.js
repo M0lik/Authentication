@@ -17,15 +17,15 @@ export const signup = async (req, res) => {
     if (req.body.roles) {
       const roles = await Role.find({ name: { $in: req.body.roles } });
       user.roles = roles.map(role => role._id);
-      await user.save();
-      return res.send({ message: "User was registered successfully!" });
     } else {
       const role = await Role.findOne({ name: "user" });
       user.roles = [role._id];
-      await user.save();
-      return res.send({ message: "User was registered successfully!" });
     }
-  } catch (err) {
+
+    await user.save();
+    return res.send({ message: "User was registered successfully!" });
+  }
+  catch (err) {
     console.error('error :', err);
     return res.status(500).send({ message: err });
   }
@@ -52,16 +52,19 @@ export const signin = async (req, res) => {
       });
     }
 
-    var token = jwt.sign({ id: user.id }, config.secret, {
-      expiresIn: 86400 // 24 hours
-    });
+    var token = jwt.sign(
+      { id: user.id },
+      config.secret,
+      { expiresIn: 86400 }
+    );//24h
 
     var authorities = [];
 
     for (let i = 0; i < user.roles.length; i++) {
       authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
     }
-    res.status(200).send({
+
+    return res.status(200).send({
       id: user._id,
       username: user.username,
       email: user.email,
