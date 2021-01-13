@@ -1,12 +1,12 @@
-const config = require("../config/auth.config");
-const db = require("../models");
+import config from '../config/auth.config';
+import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
+import db from '../models';
+
 const User = db.user;
 const Role = db.role;
 
-var jwt = require("jsonwebtoken");
-var bcrypt = require("bcryptjs");
-
-exports.signup = (req, res) => {
+export const signup = (req, res) => {
   const user = new User({
     username: req.body.username,
     email: req.body.email,
@@ -62,7 +62,7 @@ exports.signup = (req, res) => {
   });
 };
 
-exports.signin = (req, res) => {
+export const signin = (req, res) => {
   User.findOne({
     username: req.body.username
   })

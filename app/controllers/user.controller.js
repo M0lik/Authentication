@@ -1,15 +1,6 @@
-exports.allAccess = (req, res) => {
-    res.status(200).send("Public Content.");
-  };
-  
-  exports.userBoard = (req, res) => {
-    res.status(200).send("User Content.");
-  };
-  
-  exports.adminBoard = (req, res) => {
-    res.status(200).send("Admin Content.");
-  };
-  
-  exports.moderatorBoard = (req, res) => {
-    res.status(200).send("Moderator Content.");
-  };
+export default {
+    allAccess : (req, res) => res.status(200).send("Public Content."),
+    userBoard : (req, res) => res.status(200).send("User Content."),
+    adminBoard : (req, res) => res.status(200).send("Admin Content."),
+    moderatorBoard : (req, res) => res.status(200).send("Moderator Content.")
+}
